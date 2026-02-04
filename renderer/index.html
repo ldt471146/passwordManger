@@ -1,0 +1,157 @@
+<!doctype html>
+<html lang="zh-CN">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>账号密码管理器</title>
+    <link rel="stylesheet" href="styles.css" />
+  </head>
+  <body>
+    <div class="app">
+      <aside class="sidebar">
+        <div class="brand">
+          <div class="logo">AM</div>
+          <div>
+            <div class="title">账号密码管理器</div>
+            <div class="subtitle">本地离线保险库</div>
+          </div>
+        </div>
+
+        <div class="search">
+          <input id="searchInput" type="text" placeholder="搜索：名称 / 标签 / 网址" />
+        </div>
+
+        <div class="tag-panel">
+          <div class="tag-title">标签分组</div>
+          <div class="tag-list" id="tagList"></div>
+        </div>
+
+        <div class="list" id="entryList"></div>
+
+        <div class="sidebar-actions">
+          <button class="btn ghost" id="btnReveal">查看库路径</button>
+        </div>
+      </aside>
+
+      <main class="main">
+        <section class="toolbar">
+          <div class="toolbar-left">
+            <button class="btn ghost" id="btnNew">新建条目</button>
+            <button class="btn ghost" id="btnExportJson">导出 JSON</button>
+            <button class="btn ghost" id="btnImportJson">导入 JSON</button>
+            <button class="btn ghost" id="btnExportCsv">导出 CSV</button>
+            <button class="btn ghost" id="btnTagManage">管理标签</button>
+          </div>
+          <div class="toolbar-right">
+            <div class="theme-title">主题</div>
+            <div class="theme-row">
+              <button class="btn ghost theme-btn" data-theme="ocean">海洋蓝</button>
+              <button class="btn ghost theme-btn" data-theme="sand">沙丘金</button>
+              <button class="btn ghost theme-btn" data-theme="forest">森林绿</button>
+            </div>
+          </div>
+        </section>
+
+        <section class="vault-banner" id="vaultBanner">
+          <div>
+            <div class="banner-title">已锁定</div>
+            <div class="banner-sub">输入主密码解锁。</div>
+          </div>
+          <div class="banner-actions">
+            <input id="masterPassword" type="password" placeholder="主密码" />
+            <button class="btn primary" id="btnUnlock">解锁</button>
+            <button class="btn outline" id="btnCreate">创建新库</button>
+          </div>
+          <div class="banner-hint" id="vaultHint"></div>
+        </section>
+
+        <section class="editor">
+          <div class="header">
+            <div>
+              <div class="header-title" id="editorTitle">未选择条目</div>
+              <div class="header-sub" id="editorSub">从列表选择或创建新条目。</div>
+            </div>
+            <div class="header-actions">
+              <button class="btn outline" id="btnCopy">复制密码</button>
+              <button class="btn outline" id="btnGen">生成密码</button>
+              <button class="btn outline" id="btnClearPass">清空密码</button>
+              <button class="btn danger" id="btnDelete">删除</button>
+              <button class="btn primary" id="btnSave">保存</button>
+            </div>
+          </div>
+
+          <div class="form">
+            <label>
+              <span>名称</span>
+              <input id="fieldName" type="text" placeholder="例如：GitHub" />
+            </label>
+            <label>
+              <span>账号</span>
+              <input id="fieldUser" type="text" placeholder="例如：user@example.com" />
+            </label>
+            <label class="row">
+              <span>密码</span>
+              <div class="row-inline">
+                <input id="fieldPass" type="password" placeholder="••••••" />
+                <button class="btn ghost" id="btnTogglePass">显示</button>
+              </div>
+            </label>
+            <label>
+              <span>网址</span>
+              <input id="fieldUrl" type="text" placeholder="https://example.com" />
+            </label>
+            <label>
+              <span>标签</span>
+              <input id="fieldTags" type="text" placeholder="工作, 个人, 金融" />
+            </label>
+            <label>
+              <span>备注</span>
+              <textarea id="fieldNotes" rows="6" placeholder="可选备注"></textarea>
+            </label>
+          </div>
+        </section>
+      </main>
+    </div>
+
+    <div class="toast" id="toast"></div>
+
+    <div class="modal" id="genModal">
+      <div class="modal-card">
+        <div class="modal-title">生成密码</div>
+        <div class="modal-row">
+          <label>长度</label>
+          <input id="genLen" type="number" min="8" max="64" value="16" />
+        </div>
+        <div class="modal-row">
+          <label><input id="genUpper" type="checkbox" checked /> 大写字母</label>
+          <label><input id="genLower" type="checkbox" checked /> 小写字母</label>
+        </div>
+        <div class="modal-row">
+          <label><input id="genNum" type="checkbox" checked /> 数字</label>
+          <label><input id="genSym" type="checkbox" /> 符号</label>
+        </div>
+        <div class="modal-actions">
+          <button class="btn outline" id="btnGenCancel">取消</button>
+          <button class="btn primary" id="btnGenOk">生成</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="modal" id="tagModal">
+      <div class="modal-card wide">
+        <div class="modal-title">标签管理</div>
+        <div class="modal-row">
+          <input id="tagNameInput" type="text" placeholder="标签名称" />
+          <input id="tagColorInput" type="color" value="#4dd4ff" />
+          <button class="btn primary" id="btnTagAdd">添加</button>
+        </div>
+        <div class="tag-manage-list" id="tagManageList"></div>
+        <div class="modal-actions">
+          <button class="btn outline" id="btnTagClose">关闭</button>
+        </div>
+      </div>
+    </div>
+
+    <script src="app.js"></script>
+  </body>
+</html>
